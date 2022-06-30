@@ -93,7 +93,7 @@ public class AddressBook extends BaseClass {
 			String Env = storage.getProperty("Env");
 			System.out.println("Env " + Env);
 
-			String PartialPath = "C:\\Users\\rprajapati\\git\\FedExApplication_Maven\\FedExApplication_Maven\\src\\main\\resources\\TestFiles\\";
+			String PartialPath = "C:\\Users\\rprajapati\\git\\FedExAppMaven\\FedExApplicationMaven\\src\\main\\resources\\TestFiles\\";
 
 			// --STG File
 			String STGAddressImport = PartialPath + "AddressImport_STG.txt";
