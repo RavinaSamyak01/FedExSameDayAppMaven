@@ -9,12 +9,12 @@
 	
 	
 	-->
-<test thread-count="5" name="Rate Verification">
+	<test thread-count="5" name="Rate Verification">
 		<classes>
 			<class name="rateScreenFedEx.RateVerification"></class>
 		</classes>
 	</test>
-	
+
 	<test thread-count="5" name="Shipment Creation">
 		<classes>
 			<class name="shipmentFedExWebSite.ShipmentCreation"></class>
@@ -31,12 +31,6 @@
 	<test thread-count="5" name="Crud Operations">
 		<classes>
 			<class name="shipmentFedExWebSite.CrudOperation"></class>
-		</classes>
-	</test>
-
-	<test thread-count="5" name="Broken Links">
-		<classes>
-			<class name="com.fdxMasterScreens.BrokenLinks"></class>
 		</classes>
 	</test>
 
