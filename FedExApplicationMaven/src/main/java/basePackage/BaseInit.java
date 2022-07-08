@@ -52,11 +52,9 @@ public class BaseInit {
 		options.addArguments("--proxy-bypass-list=*");
 		options.addArguments("--disable-extensions");
 		options.addArguments("--no-sandbox");
-		options.addArguments("--start-maximized");
+		// options.addArguments("--start-maximized");
 		options.addArguments("--disable-site-isolation-trials");
-
-		// options.addArguments("window-size=800x600");
-		// options.addArguments("window-size=1366x788");
+		options.addArguments("window-size=1032, 776");
 		capabilities.setPlatform(Platform.ANY);
 		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 		driver = new ChromeDriver(options);
@@ -180,10 +178,10 @@ public class BaseInit {
 					msg.append("URL is working==PASS");
 				} catch (Exception loginpage) {
 					msg.append("URL is not working==FAIL");
-					getScreenshot(driver, "LoginIssue");
+					getScreenshot(driver, "LoginURLIssue");
 					driver.quit();
 					Env = storage.getProperty("Env");
-					String File = ".\\src\\main\\resources\\Screenshots\\LoginIssue.png";
+					String File = ".\\src\\main\\resources\\Screenshots\\LoginURLIssue.png";
 					String subject = "Selenium Automation Script: " + Env + " FedEx Login";
 
 					try {
@@ -202,9 +200,9 @@ public class BaseInit {
 		try {
 			Thread.sleep(2000);
 			driver.findElement(By.id("Header_fdx_main_cmdMenuLogin")).click();
+			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@class=\"fdx-o-grid\"]")));
 			System.out.println("Login done");
 			driver.getTitle();
-			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@class=\"fdx-o-grid\"]")));
 			msg.append("Step4 : Application Login Successfully : PASS" + "\n");
 			Env = storage.getProperty("Env");
 			String subject = "Selenium Automation Script: " + Env + " FedEx Login";
@@ -222,22 +220,29 @@ public class BaseInit {
 				msg.append("User is already loggedin");
 
 			} catch (Exception frg) {
-				driver.findElement(By.id("Header_fdx_main_liLogin")).click();
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Header_fdx_main_lblloginmmsg")));
-				String ValMsg = driver.findElement(By.id("Header_fdx_main_lblloginmmsg")).getText();
-				msg.append("Step4 : Application Login Successfully : FAIL, " + ValMsg + "\n");
+				try {
+					driver.findElement(By.id("Header_fdx_main_liLogin")).click();
+					wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Header_fdx_main_lblloginmmsg")));
+					String ValMsg = driver.findElement(By.id("Header_fdx_main_lblloginmmsg")).getText();
+					msg.append("Step4 : Application Login Successfully : FAIL, " + ValMsg + "\n");
+					getScreenshot(driver, "LoginIssue");
+				} catch (Exception OnLOGinBTN) {
+					msg.append("Step4 : Application Login Successfully : FAIL" + "\n");
+					msg.append("URL is==" + driver.getCurrentUrl());
+					getScreenshot(driver, "LoginIssue");
 
+				}
 				// --End the suit
 				end();
 				// Send Email
-
+				String File = ".\\src\\main\\resources\\Screenshots\\LoginIssue.png";
 				Env = storage.getProperty("Env");
 				String subject = "Selenium Automation Script: " + Env + " FedEx Login";
 				try {
 					// asharma@samyak.com,sdas@samyak.com,pgandhi@samyak.com,byagnik@samyak.com,pdoshi@samyak.com
 					// ravina.prajapati@samyak.com,asharma@samyak.com,parth.doshi@samyak.com
 					Email.sendMail("ravina.prajapati@samyak.com,asharma@samyak.com,parth.doshi@samyak.com", subject,
-							msg.toString(), "");
+							msg.toString(), File);
 				} catch (Exception ex) {
 					Logger.getLogger(RateVerification.class.getName()).log(Level.SEVERE, null, ex);
 				}
