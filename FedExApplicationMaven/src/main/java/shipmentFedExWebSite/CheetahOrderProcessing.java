@@ -42,10 +42,9 @@ public class CheetahOrderProcessing extends BaseInit {
 
 		System.out.println("Cheetah Process Start----" + "\n");
 		// Read data from Excel
-
-		// 22
-		for (int i = 1; i < 22; i++) {
-			try {
+		try {
+			// 22
+			for (int i = 1; i < 22; i++) {
 
 				if (i == 1) // Normal Order Processing
 				{
@@ -857,35 +856,35 @@ public class CheetahOrderProcessing extends BaseInit {
 				}
 
 				System.out.println("Cheetah Process END----");
+			}
 
-				msg.append("Regards, - " + "\n");
-				msg.append("Selenium Automation" + "\n\n\n");
-				// Send Email
-				Env = storage.getProperty("Env");
-				String subject = "Selenium Automation Script: " + Env + " Cheetah Order Processing";
+			msg.append("Regards, - " + "\n");
+			msg.append("Selenium Automation" + "\n\n\n");
+			// Send Email
+			Env = storage.getProperty("Env");
+			String subject = "Selenium Automation Script: " + Env + " Cheetah Order Processing";
 
-				// asharma@samyak.com,pgandhi@samyak.com,sdas@samyak.com,byagnik@samyak.com,pdoshi@samyak.com
-				try {
-					Email.sendMail("ravina.prajapati@samyak.com,asharma@samyak.com,parth.doshi@samyak.com", subject,
-							msg.toString(), "");
-				} catch (Exception ex) {
-					Logger.getLogger(ShipmentCreation.class.getName()).log(Level.SEVERE, null, ex);
-				}
-			} catch (Exception Responseeee) {
-				msg.append("Issue in Cheetah process");
-				getScreenshot(driver, "CheetahIssue");
-				Env = storage.getProperty("Env");
-				String File = ".\\src\\main\\resources\\Screenshots\\CheetahIssue.png";
-				String subject = "Selenium Automation Script: " + Env + " Cheetah Order Processing";
+			// asharma@samyak.com,pgandhi@samyak.com,sdas@samyak.com,byagnik@samyak.com,pdoshi@samyak.com
+			try {
+				Email.sendMail("ravina.prajapati@samyak.com,asharma@samyak.com,parth.doshi@samyak.com", subject,
+						msg.toString(), "");
+			} catch (Exception ex) {
+				Logger.getLogger(ShipmentCreation.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		} catch (Exception Responseeee) {
+			msg.append("Issue in Cheetah process");
+			getScreenshot(driver, "CheetahIssue");
+			Env = storage.getProperty("Env");
+			String File = ".\\src\\main\\resources\\Screenshots\\CheetahIssue.png";
+			String subject = "Selenium Automation Script: " + Env + " Cheetah Order Processing";
 
-				try {
-					// asharma@samyak.com,sdas@samyak.com,pgandhi@samyak.com,byagnik@samyak.com,pdoshi@samyak.com
-					// ravina.prajapati@samyak.com,asharma@samyak.com,parth.doshi@samyak.com
-					Email.sendMail("ravina.prajapati@samyak.com,asharma@samyak.com,parth.doshi@samyak.com", subject,
-							msg.toString(), File);
-				} catch (Exception ex) {
-					Logger.getLogger(RateVerification.class.getName()).log(Level.SEVERE, null, ex);
-				}
+			try {
+				// asharma@samyak.com,sdas@samyak.com,pgandhi@samyak.com,byagnik@samyak.com,pdoshi@samyak.com
+				// ravina.prajapati@samyak.com,asharma@samyak.com,parth.doshi@samyak.com
+				Email.sendMail("ravina.prajapati@samyak.com,asharma@samyak.com,parth.doshi@samyak.com", subject,
+						msg.toString(), File);
+			} catch (Exception ex) {
+				Logger.getLogger(RateVerification.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
 

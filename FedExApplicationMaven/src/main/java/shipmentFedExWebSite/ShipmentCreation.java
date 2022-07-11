@@ -257,7 +257,8 @@ public class ShipmentCreation extends BaseInit {
 
 			// If match with PR, below code will execute
 			if (serviceid.equals("PR")) {
-
+				WebElement PRSrvc=driver.findElement(By.id("chkPR"));
+				act.moveToElement(PRSrvc).build().perform();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("chkPR")));
 				driver.findElement(By.id("chkPR")).click();
 				String rate = driver.findElement(By.id("btnPR")).getText();
@@ -279,7 +280,8 @@ public class ShipmentCreation extends BaseInit {
 			}
 			// If match with S2, below code will execute
 			else if (serviceid.equals("S2")) {
-
+				WebElement PRSrvc = driver.findElement(By.id("chkS2"));
+				act.moveToElement(PRSrvc).build().perform();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("chkS2")));
 				driver.findElement(By.id("chkS2")).click();
 
@@ -304,6 +306,8 @@ public class ShipmentCreation extends BaseInit {
 				}
 
 			} else if (serviceid.equals("EC")) {
+				WebElement PRSrvc = driver.findElement(By.id("chkSDRTS"));
+				act.moveToElement(PRSrvc).build().perform();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("chkSDRTS")));
 				driver.findElement(By.id("chkSDRTS")).click();
 				Thread.sleep(2000);
@@ -339,6 +343,8 @@ public class ShipmentCreation extends BaseInit {
 				}
 
 			} else if (serviceid.equals("DR")) {
+				WebElement PRSrvc = driver.findElement(By.id("chkDR"));
+				act.moveToElement(PRSrvc).build().perform();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("chkDR")));
 				driver.findElement(By.id("chkDR")).click();
 				Thread.sleep(2000);
@@ -362,6 +368,9 @@ public class ShipmentCreation extends BaseInit {
 				}
 
 			} else if (serviceid.equals("DRV")) {
+				WebElement PRSrvc = driver.findElement(By.id("chkDRV"));
+				act.moveToElement(PRSrvc).build().perform();
+
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("chkDRV")));
 				driver.findElement(By.id("chkDRV")).click();
 				Thread.sleep(2000);
@@ -387,7 +396,8 @@ public class ShipmentCreation extends BaseInit {
 				}
 
 			} else if (serviceid.equals("AIR")) {
-
+				WebElement PRSrvc = driver.findElement(By.id("chkAIR"));
+				act.moveToElement(PRSrvc).build().perform();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("chkAIR")));
 				driver.findElement(By.id("chkAIR")).click();
 				Thread.sleep(2000);
@@ -412,7 +422,8 @@ public class ShipmentCreation extends BaseInit {
 				}
 
 			} else if (serviceid.equals("SDC")) {
-
+				WebElement PRSrvc = driver.findElement(By.id("chkSDC"));
+				act.moveToElement(PRSrvc).build().perform();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("chkSDC")));
 				driver.findElement(By.id("chkSDC")).click();
 				Thread.sleep(2000);
@@ -437,6 +448,8 @@ public class ShipmentCreation extends BaseInit {
 				}
 
 			} else if (serviceid.equals("FRG")) {
+				WebElement PRSrvc = driver.findElement(By.id("chkFRG"));
+				act.moveToElement(PRSrvc).build().perform();
 
 				driver.findElement(By.id("chkFRG")).click();
 				Thread.sleep(2000);

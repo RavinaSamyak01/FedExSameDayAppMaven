@@ -315,10 +315,10 @@ public class BaseInit {
 		// --Rate Verification File
 		if (Env.equalsIgnoreCase("Pre-Prod") && FileName.contains("RateVerification")) {
 			FilePath = storage.getProperty("PREPRD_RateVerificationFile");
-			System.out.println("File==" + FilePath);
+
 		} else if (Env.equalsIgnoreCase("STG") && FileName.contains("RateVerification")) {
 			FilePath = storage.getProperty("STG_RateVerificationFile");
-			System.out.println("File==" + FilePath);
+
 		} else if (Env.equalsIgnoreCase("DEV") && FileName.contains("RateVerification")) {
 			FilePath = storage.getProperty("DEV_RateVerificationFile");
 		}
@@ -326,10 +326,10 @@ public class BaseInit {
 		// --Shipment Creation File
 		else if (Env.equalsIgnoreCase("Pre-Prod") && FileName.contains("ShipmentCreation")) {
 			FilePath = storage.getProperty("PREPRD_ShipmentCreationFile");
-			System.out.println("File==" + FilePath);
+
 		} else if (Env.equalsIgnoreCase("STG") && FileName.contains("ShipmentCreation")) {
 			FilePath = storage.getProperty("STG_ShipmentCreationFile");
-			System.out.println("File==" + FilePath);
+
 		} else if (Env.equalsIgnoreCase("DEV") && FileName.contains("ShipmentCreation")) {
 			FilePath = storage.getProperty("DEV_ShipmentCreationFile");
 		}
@@ -337,10 +337,9 @@ public class BaseInit {
 		// --Crud Operation File
 		else if (Env.equalsIgnoreCase("Pre-Prod") && FileName.contains("CrudOperation")) {
 			FilePath = storage.getProperty("PREPRD_CrudOperationFile");
-			System.out.println("File==" + FilePath);
+
 		} else if (Env.equalsIgnoreCase("STG") && FileName.contains("CrudOperation")) {
 			FilePath = storage.getProperty("STG_CrudOperationFile");
-			System.out.println("File==" + FilePath);
 
 		} else if (Env.equalsIgnoreCase("DEV") && FileName.contains("CrudOperation")) {
 			FilePath = storage.getProperty("DEV_CrudOperationFile");
@@ -348,11 +347,9 @@ public class BaseInit {
 		// --Cheetah Process File
 		else if (Env.equalsIgnoreCase("Pre-Prod") && FileName.contains("CheetahProcess")) {
 			FilePath = storage.getProperty("PREPRD_CheetahProcessFile");
-			System.out.println("File==" + FilePath);
 
 		} else if (Env.equalsIgnoreCase("STG") && FileName.contains("CheetahProcess")) {
 			FilePath = storage.getProperty("STG_CheetahProcessFile");
-			System.out.println("File==" + FilePath);
 
 		} else if (Env.equalsIgnoreCase("DEV") && FileName.contains("CheetahProcess")) {
 			FilePath = storage.getProperty("DEV_CheetahProcessFile");
