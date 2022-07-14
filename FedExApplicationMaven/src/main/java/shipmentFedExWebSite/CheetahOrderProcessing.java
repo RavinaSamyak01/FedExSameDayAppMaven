@@ -19,7 +19,7 @@ public class CheetahOrderProcessing extends BaseInit {
 
 	@Test
 	public void cheetahOrderPro() throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver, 5);
+		WebDriverWait wait = new WebDriverWait(driver, 30);
 		Actions act = new Actions(driver);
 		msg.append("Cheetah Order Processing Start - " + "\n\n\n");
 

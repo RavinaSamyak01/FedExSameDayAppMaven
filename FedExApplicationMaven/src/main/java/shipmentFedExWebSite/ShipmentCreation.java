@@ -33,7 +33,7 @@ public class ShipmentCreation extends BaseInit {
 		// 26
 
 		for (int i = 1; i < 26; i++) {
-			WebDriverWait wait = new WebDriverWait(driver, 50);
+			WebDriverWait wait = new WebDriverWait(driver, 30);
 			// --click on shipping menu
 			driver.findElement(By.linkText("Shipping")).click(); // Click on ship screen
 			Thread.sleep(2000);
@@ -108,22 +108,22 @@ public class ShipmentCreation extends BaseInit {
 			// click on calander
 			driver.findElement(By.id("anchor1xx")).click(); // click on calander
 			driver.findElement(By.xpath("//a[contains(.,'Today')]")).click(); // select today
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 
 			// ready time selection
 			Select select1 = new Select(driver.findElement(By.id("ddlReadyHour")));
 			select1.selectByVisibleText("11");
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 
 			// ready time min selection
 			select1 = new Select(driver.findElement(By.id("ddlReadyMinutes")));
 			select1.selectByVisibleText("30");
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 
 			// AM/ PM selection
 			select1 = new Select(driver.findElement(By.xpath(".//*[@name='ddlReadyTimeType']")));
 			select1.selectByVisibleText("AM");
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 
 			// Service ID compare from the Excel
 			String serviceid = getData("ShipmentCreation", "Sheet1", i, 13);
@@ -146,7 +146,6 @@ public class ShipmentCreation extends BaseInit {
 			// Generate random numbers
 			Random rn = new Random();
 			int pval = Integer.parseInt(pieces);
-			Thread.sleep(2000);
 			if (pval == 1) {
 				int ans;
 				if (serviceid.equals("FRG")) {
@@ -206,7 +205,7 @@ public class ShipmentCreation extends BaseInit {
 					// --select dim form Dim dropdown
 					Select dim = new Select(driver.findElement(By.id(drpdim)));
 					dim.selectByVisibleText("Enter dimensions");
-					Thread.sleep(2000);
+					Thread.sleep(1000);
 
 					driver.findElement(By.id(dimlen)).clear();
 					driver.findElement(By.id(dimlen)).sendKeys(st);
@@ -229,7 +228,6 @@ public class ShipmentCreation extends BaseInit {
 			act.moveToElement(Cal).click().perform();
 			Thread.sleep(2000);
 			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("divAvailableServicesInternal")));
-			Thread.sleep(2000);
 
 			try {
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("lblErrSignatureType")));
@@ -239,15 +237,14 @@ public class ShipmentCreation extends BaseInit {
 				// --select signature
 				Select sign = new Select(driver.findElement(By.id("ddlSignatureType")));
 				sign.selectByValue("ISR");
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 				System.out.println("Signature selected");
 
 				Cal = driver.findElement(By.id("lnkCalculate"));
 				// Click on calculate link
 				act.moveToElement(Cal).click().perform();
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("divAvailableServicesInternal")));
-				Thread.sleep(2000);
 
 			} catch (Exception e) {
 
@@ -256,8 +253,10 @@ public class ShipmentCreation extends BaseInit {
 			// Service
 
 			// If match with PR, below code will execute
+			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("divAvailableServicesInternal")));
+
 			if (serviceid.equals("PR")) {
-				WebElement PRSrvc=driver.findElement(By.id("chkPR"));
+				WebElement PRSrvc = driver.findElement(By.id("chkPR"));
 				act.moveToElement(PRSrvc).build().perform();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("chkPR")));
 				driver.findElement(By.id("chkPR")).click();

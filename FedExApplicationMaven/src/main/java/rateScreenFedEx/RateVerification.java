@@ -24,7 +24,7 @@ public class RateVerification extends BaseInit {
 
 	@Test
 	public void prService() throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver, 50);
+		WebDriverWait wait = new WebDriverWait(driver, 30);
 		msg.append("Rate/Quote Verification Process Start.... " + "\n");
 		long start, end;
 		// --get the data
