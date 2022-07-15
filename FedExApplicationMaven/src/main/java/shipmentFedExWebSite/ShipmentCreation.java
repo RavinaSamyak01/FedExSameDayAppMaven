@@ -517,11 +517,13 @@ public class ShipmentCreation extends BaseInit {
 
 			} catch (Exception ACRestriction) {
 				System.out.println("Account is Active");
+				Thread.sleep(5000);
 				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("currentForm")));
 				// Confirm from Shipment Summary screen.
 				driver.getTitle();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[id=cmdSubmit]")));
 				driver.findElement(By.cssSelector("input[id=cmdSubmit]")).click();
+				Thread.sleep(5000);
 
 				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("dvPrintGrid")));
 				end = System.nanoTime();
