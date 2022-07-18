@@ -2,24 +2,24 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2022-07-11T18:55:39 IST" name="Default suite" finished-at="2022-07-11T19:02:46 IST" duration-ms="426922">
+  <suite started-at="2022-07-18T19:36:00 IST" name="Default suite" finished-at="2022-07-18T20:08:07 IST" duration-ms="1926578">
     <groups>
     </groups>
-    <test started-at="2022-07-11T18:55:39 IST" name="Default test" finished-at="2022-07-11T19:02:46 IST" duration-ms="426922">
-      <class name="shipmentFedExWebSite.CheetahOrderProcessing">
-        <test-method is-config="true" signature="startUp()[pri:0, instance:shipmentFedExWebSite.CheetahOrderProcessing@4dbb42b7]" started-at="2022-07-11T18:55:20 IST" name="startUp" finished-at="2022-07-11T18:55:39 IST" duration-ms="19462" status="PASS">
+    <test started-at="2022-07-18T19:36:00 IST" name="Default test" finished-at="2022-07-18T20:08:07 IST" duration-ms="1926578">
+      <class name="rateScreenFedEx.RateVerification">
+        <test-method is-config="true" signature="startUp()[pri:0, instance:rateScreenFedEx.RateVerification@316bcf94]" started-at="2022-07-18T19:35:38 IST" name="startUp" finished-at="2022-07-18T19:36:00 IST" duration-ms="22593" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startUp -->
-        <test-method signature="cheetahOrderPro()[pri:0, instance:shipmentFedExWebSite.CheetahOrderProcessing@4dbb42b7]" started-at="2022-07-11T18:55:39 IST" name="cheetahOrderPro" finished-at="2022-07-11T19:02:46 IST" duration-ms="426821" status="PASS">
+        <test-method signature="prService()[pri:0, instance:rateScreenFedEx.RateVerification@316bcf94]" started-at="2022-07-18T19:36:00 IST" name="prService" finished-at="2022-07-18T20:08:07 IST" duration-ms="1926528" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- cheetahOrderPro -->
-        <test-method is-config="true" signature="end()[pri:0, instance:shipmentFedExWebSite.CheetahOrderProcessing@4dbb42b7]" started-at="2022-07-11T19:02:46 IST" name="end" finished-at="2022-07-11T19:02:47 IST" duration-ms="694" status="PASS">
+        </test-method> <!-- prService -->
+        <test-method is-config="true" signature="end()[pri:0, instance:rateScreenFedEx.RateVerification@316bcf94]" started-at="2022-07-18T20:08:07 IST" name="end" finished-at="2022-07-18T20:08:08 IST" duration-ms="1130" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- end -->
-      </class> <!-- shipmentFedExWebSite.CheetahOrderProcessing -->
+      </class> <!-- rateScreenFedEx.RateVerification -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

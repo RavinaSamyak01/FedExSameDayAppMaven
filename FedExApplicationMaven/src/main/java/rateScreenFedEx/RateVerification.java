@@ -1,15 +1,21 @@
 package rateScreenFedEx;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -25,6 +31,7 @@ public class RateVerification extends BaseInit {
 	@Test
 	public void prService() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
+		// Actions act = new Actions(driver);
 		msg.append("Rate/Quote Verification Process Start.... " + "\n");
 		long start, end;
 		// --get the data
@@ -38,7 +45,7 @@ public class RateVerification extends BaseInit {
 
 				// --PickUp Zip
 				String PUZip = getData("RateVerification", "Sheet1", i, 0);
-				System.out.println("PickUp Zip=="+PUZip);
+				System.out.println("PickUp Zip==" + PUZip);
 				driver.findElement(By.id("txtOrig")).clear();
 				driver.findElement(By.id("txtOrig")).sendKeys(PUZip);
 				driver.findElement(By.id("txtOrig")).sendKeys(Keys.TAB);
@@ -134,8 +141,11 @@ public class RateVerification extends BaseInit {
 							.getText();
 					System.out.println(actrate);
 					String ExpectedRate = getData("RateVerification", "Sheet1", i, 3);
+
 					setData("RateVerification", "Sheet1", i, 4, actrate);
 					msg.append("ServiceID==" + serviceid + "\n");
+					// --Get the Rate details
+					GetRateDetails(3, 1, 1, i);
 					msg.append("Actual Rate==" + actrate + "\n");
 					msg.append("Expected Rate==" + ExpectedRate + "\n");
 
@@ -161,9 +171,13 @@ public class RateVerification extends BaseInit {
 							.getText();
 					System.out.println(actrate);
 					String ExpectedRate = getData("RateVerification", "Sheet1", i, 3);
+
 					setData("RateVerification", "Sheet1", i, 4, actrate);
 					msg.append("ServiceID==" + serviceid + "\n");
+					// --Get the Rate details
+					GetRateDetails(5, 2, 2, i);
 					msg.append("Actual Rate==" + actrate + "\n");
+
 					msg.append("Expected Rate==" + ExpectedRate + "\n");
 					if (!actrate.equals(ExpectedRate)) {
 						setData("RateVerification", "Sheet1", i, 5, "FAIL");
@@ -184,9 +198,14 @@ public class RateVerification extends BaseInit {
 							.getText();
 					System.out.println(actrate);
 					String ExpectedRate = getData("RateVerification", "Sheet1", i, 3);
+
 					setData("RateVerification", "Sheet1", i, 4, actrate);
 					msg.append("ServiceID==" + serviceid + "\n");
+					// --Get the Rate details
+					GetRateDetails(7, 3, 3, i);
+
 					msg.append("Actual Rate==" + actrate + "\n");
+
 					msg.append("Expected Rate==" + ExpectedRate + "\n");
 					if (!actrate.equals(ExpectedRate)) {
 						setData("RateVerification", "Sheet1", i, 5, "FAIL");
@@ -207,9 +226,14 @@ public class RateVerification extends BaseInit {
 							.getText();
 					System.out.println(actrate);
 					String ExpectedRate = getData("RateVerification", "Sheet1", i, 3);
+
 					setData("RateVerification", "Sheet1", i, 4, actrate);
 					msg.append("ServiceID==" + serviceid + "\n");
+					// --Get the Rate details
+					GetRateDetails(1, 0, 0, i);
+
 					msg.append("Actual Rate==" + actrate + "\n");
+
 					msg.append("Expected Rate==" + ExpectedRate + "\n");
 					if (!actrate.equals(ExpectedRate)) {
 						setData("RateVerification", "Sheet1", i, 5, "FAIL");
@@ -230,9 +254,13 @@ public class RateVerification extends BaseInit {
 							.getText();
 					System.out.println(actrate);
 					String ExpectedRate = getData("RateVerification", "Sheet1", i, 3);
+
 					setData("RateVerification", "Sheet1", i, 4, actrate);
 					msg.append("ServiceID==" + serviceid + "\n");
+					// --Get the Rate details
+					GetRateDetails(1, 0, 0, i);
 					msg.append("Actual Rate==" + actrate + "\n");
+
 					msg.append("Expected Rate==" + ExpectedRate + "\n");
 					if (!actrate.equals(ExpectedRate)) {
 						setData("RateVerification", "Sheet1", i, 5, "FAIL");
@@ -256,9 +284,14 @@ public class RateVerification extends BaseInit {
 							.getText();
 					System.out.println(actrate);
 					String ExpectedRate = getData("RateVerification", "Sheet1", i, 3);
+
 					setData("RateVerification", "Sheet1", i, 4, actrate);
 					msg.append("ServiceID==" + serviceid + "\n");
+					// --Get the Rate details
+					GetRateDetails(1, 0, 0, i);
+
 					msg.append("Actual Rate==" + actrate + "\n");
+
 					msg.append("Expected Rate==" + ExpectedRate + "\n");
 					if (!actrate.equals(ExpectedRate)) {
 						setData("RateVerification", "Sheet1", i, 5, "FAIL");
@@ -295,6 +328,64 @@ public class RateVerification extends BaseInit {
 					msg.toString(), "");
 		} catch (Exception ex) {
 			Logger.getLogger(RateVerification.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+	}
+
+	public static void GetRateDetails(int TBody, int Ebtn, int RDetail, int Col)
+			throws EncryptedDocumentException, InvalidFormatException, IOException {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		Actions act = new Actions(driver);
+
+		// --Expand the Rate
+		String SXpath = "//*[@class=\"fdxRatetable\"]/tbody[" + TBody + "]//div[@id=\"toggle-" + Ebtn + "\"]/button";
+		System.out.println("SExpand xpath==" + SXpath);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SXpath)));
+		WebElement ExpandPR = driver.findElement(By.xpath(SXpath));
+		act.moveToElement(ExpandPR).build().perform();
+		act.moveToElement(ExpandPR).click().perform();
+
+		// --Get the Rate details
+		String RBasicXpath = "//*[@id=\"FdxrateDetail" + RDetail + "\"]";
+		System.out.println("BRate Detail xpath==" + RBasicXpath);
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(RBasicXpath)));
+
+		String RNameXpath = RBasicXpath + "//td[1]/div";
+		System.out.println("RName Xpath==" + RNameXpath);
+		String RValueXpath = RBasicXpath + "//td[2]/div";
+		System.out.println("RValue Xpath==" + RValueXpath);
+
+		// --Create List of Rate Names
+		List<WebElement> RateNames = driver.findElements(By.xpath(RNameXpath));
+		int TotalRName = RateNames.size();
+		System.out.println("Total Rates==" + TotalRName);
+
+		for (int RN = 0; RN < TotalRName; RN++) {
+			String RName = RateNames.get(RN).getText();
+			System.out.println("Rate Name==" + RName);
+			// --Create List of Rate Values
+			List<WebElement> RateValues = driver.findElements(By.xpath(RValueXpath));
+			int TotalRValue = RateValues.size();
+			System.out.println("Total Rates==" + TotalRName);
+			for (int RV = RN; RV < TotalRValue;) {
+				String RValue = RateValues.get(RN).getText();
+				System.out.println("Rate Value==" + RValue);
+				msg.append(RName + "=" + RValue + "\n");
+				if (RName.contains("Base Rate")) {
+					setData("RateVerification", "Sheet1", Col, 7, RValue);
+				} else if (RName.contains("Fuel Surcharge 5.75%")) {
+					setData("RateVerification", "Sheet1", Col, 8, RValue);
+				} else if (RName.contains("Excess Mileage")) {
+					setData("RateVerification", "Sheet1", Col, 9, RValue);
+				} else if (RName.contains("Estimated Total")) {
+					setData("RateVerification", "Sheet1", Col, 10, RValue);
+				} else {
+					System.out.println("Unknown Rate found");
+				}
+
+				break;
+			}
+
 		}
 
 	}
