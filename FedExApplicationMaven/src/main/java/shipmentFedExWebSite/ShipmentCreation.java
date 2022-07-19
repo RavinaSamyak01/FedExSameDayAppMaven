@@ -1,8 +1,13 @@
 package shipmentFedExWebSite;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -25,7 +30,7 @@ public class ShipmentCreation extends BaseInit {
 	@Test
 	public void shipmentCreation() throws Exception {
 		Actions act = new Actions(driver);
-		msg.append("Shipment Creation Process Start.... " + "\n");
+		msg.append("Shipment Creation Process Start.... " + "\n\n");
 		long start, end;
 		String Result = null;
 
@@ -227,7 +232,6 @@ public class ShipmentCreation extends BaseInit {
 			// Click on calculate link
 			act.moveToElement(Cal).click().perform();
 			Thread.sleep(2000);
-			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("divAvailableServicesInternal")));
 
 			try {
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("lblErrSignatureType")));
@@ -253,8 +257,12 @@ public class ShipmentCreation extends BaseInit {
 			// Service
 
 			// If match with PR, below code will execute
+			// --Move to Service DIv
+			WebElement ServiceDiv = driver.findElement(By.id("Div1"));
+			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("Div1")));
+			jse.executeScript("arguments[0].scrollIntoView();", ServiceDiv);
+			Thread.sleep(2000);
 			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("divAvailableServicesInternal")));
-			Thread.sleep(5000);
 
 			if (serviceid.equals("PR")) {
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("chkPR")));
@@ -263,9 +271,14 @@ public class ShipmentCreation extends BaseInit {
 				driver.findElement(By.id("chkPR")).click();
 				String rate = driver.findElement(By.id("btnPR")).getText();
 				System.out.println(rate);
+				msg.append("ServiceID==" + serviceid + "\n");
+
+				// --Get Rate Details
+				GetRateDetails(i, serviceid);
+
 				String ExpectedRate = getData("ShipmentCreation", "Sheet1", i, 12);
-				msg.append("PR Service - Actual Rate :" + rate + "\n");
-				msg.append("PR Service - Expected Rate :" + ExpectedRate + "\n");
+				msg.append("Actual Rate :" + rate + "\n");
+				msg.append("Expected Rate :" + ExpectedRate + "\n");
 				setData("ShipmentCreation", "Sheet1", i, 16, rate);
 				if (!rate.equals(ExpectedRate)) {
 					setData("ShipmentCreation", "Sheet1", i, 17, "FAIL");
@@ -287,9 +300,14 @@ public class ShipmentCreation extends BaseInit {
 
 				String rate = driver.findElement(By.id("btnS2")).getText();
 				System.out.println(rate);
+				msg.append("ServiceID==" + serviceid + "\n");
+
+				// --Get Rate Details
+				GetRateDetails(i, serviceid);
+
 				String ExpectedRate = getData("ShipmentCreation", "Sheet1", i, 12);
-				msg.append("S2 Service - Actual Rate :" + rate + "\n");
-				msg.append("S2 Service - Expected Rate :" + ExpectedRate + "\n");
+				msg.append("Actual Rate :" + rate + "\n");
+				msg.append("Expected Rate :" + ExpectedRate + "\n");
 
 				setData("ShipmentCreation", "Sheet1", i, 16, rate);
 
@@ -306,11 +324,24 @@ public class ShipmentCreation extends BaseInit {
 				}
 
 			} else if (serviceid.equals("EC")) {
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("chkSDRTS")));
-				WebElement PRSrvc = driver.findElement(By.id("chkSDRTS"));
-				act.moveToElement(PRSrvc).build().perform();
-				driver.findElement(By.id("chkSDRTS")).click();
+
+				// --Move to Service DIv
+				WebElement SDRS = driver.findElement(By.id("chkSDRTS"));
+				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("chkSDRTS")));
+				jse.executeScript("arguments[0].scrollIntoView();", SDRS);
 				Thread.sleep(2000);
+				act.moveToElement(SDRS).build().perform();
+				// driver.findElement(By.id("chkSDRTS")).click();
+				jse.executeScript("arguments[0].click();", SDRS);
+				Thread.sleep(2000);
+
+				// --Move to Service DIv
+				ServiceDiv = driver.findElement(By.id("Div1"));
+				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("Div1")));
+				jse.executeScript("arguments[0].scrollIntoView();", ServiceDiv);
+				Thread.sleep(2000);
+				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("divAvailableServicesInternal")));
+
 				try {
 					WebElement CheckEC = driver.findElement(By.id("chkEC"));
 					wait.until(ExpectedConditions.elementToBeClickable(By.id("chkEC")));
@@ -325,10 +356,14 @@ public class ShipmentCreation extends BaseInit {
 				Thread.sleep(2000);
 				String rate = driver.findElement(By.id("btnEC")).getText();
 				System.out.println(rate);
-				msg.append("EC Service - Actual Rate :" + rate + "\n");
+				msg.append("ServiceID==" + serviceid + "\n");
+
+				// --Get Rate Details
+				GetRateDetails(i, serviceid);
+				msg.append("Actual Rate :" + rate + "\n");
 
 				String ExpectedRate = getData("ShipmentCreation", "Sheet1", i, 12);
-				msg.append("EC Service - Expected Rate :" + ExpectedRate + "\n");
+				msg.append("Expected Rate :" + ExpectedRate + "\n");
 				setData("ShipmentCreation", "Sheet1", i, 16, rate);
 				if (!rate.equals(ExpectedRate)) {
 					setData("ShipmentCreation", "Sheet1", i, 17, "FAIL");
@@ -351,10 +386,15 @@ public class ShipmentCreation extends BaseInit {
 
 				String rate = driver.findElement(By.id("btnDR")).getText();
 				System.out.println(rate);
-				msg.append("DR Service - Actual Rate :" + rate + "\n");
+				msg.append("ServiceID==" + serviceid + "\n");
+
+				// --Get Rate Details
+				GetRateDetails(i, serviceid);
+
+				msg.append("Actual Rate :" + rate + "\n");
 
 				String ExpectedRate = getData("ShipmentCreation", "Sheet1", i, 12);
-				msg.append("DR Service - Expected Rate :" + ExpectedRate + "\n");
+				msg.append("Expected Rate :" + ExpectedRate + "\n");
 				setData("ShipmentCreation", "Sheet1", i, 16, rate);
 
 				if (!rate.equals(ExpectedRate)) {
@@ -377,10 +417,14 @@ public class ShipmentCreation extends BaseInit {
 
 				String rate = driver.findElement(By.id("btnDRV")).getText();
 				System.out.println(rate);
-				msg.append("DRV Service - Actual Rate :" + rate + "\n");
+				msg.append("ServiceID==" + serviceid + "\n");
+
+				// --Get Rate Details
+				GetRateDetails(i, serviceid);
+				msg.append("Actual Rate :" + rate + "\n");
 
 				String ExpectedRate = getData("ShipmentCreation", "Sheet1", i, 12);
-				msg.append("DRV Service - Expected Rate :" + ExpectedRate + "\n");
+				msg.append("Expected Rate :" + ExpectedRate + "\n");
 				setData("ShipmentCreation", "Sheet1", i, 16, rate);
 
 				if (!rate.equals(ExpectedRate)) {
@@ -404,10 +448,15 @@ public class ShipmentCreation extends BaseInit {
 
 				String rate = driver.findElement(By.id("btnAIR")).getText();
 				System.out.println(rate);
-				msg.append("AIR Service - Actual Rate :" + rate + "\n");
+				msg.append("ServiceID==" + serviceid + "\n");
+
+				// --Get Rate Details
+				GetRateDetails(i, serviceid);
+
+				msg.append("Actual Rate :" + rate + "\n");
 
 				String ExpectedRate = getData("ShipmentCreation", "Sheet1", i, 12);
-				msg.append("AIR Service - Expected Rate :" + ExpectedRate + "\n");
+				msg.append("Expected Rate :" + ExpectedRate + "\n");
 				setData("ShipmentCreation", "Sheet1", i, 16, rate);
 				if (!rate.equals(ExpectedRate)) {
 					setData("ShipmentCreation", "Sheet1", i, 17, "FAIL");
@@ -430,10 +479,15 @@ public class ShipmentCreation extends BaseInit {
 
 				String rate = driver.findElement(By.id("btnSDC")).getText();
 				System.out.println(rate);
-				msg.append("SDC Service - Actual Rate :" + rate + "\n");
+				msg.append("ServiceID==" + serviceid + "\n");
+
+				// --Get Rate Details
+				GetRateDetails(i, serviceid);
+
+				msg.append("Actual Rate :" + rate + "\n");
 
 				String ExpectedRate = getData("ShipmentCreation", "Sheet1", i, 12);
-				msg.append("SDC Service - Expected Rate :" + ExpectedRate + "\n");
+				msg.append("Expected Rate :" + ExpectedRate + "\n");
 				setData("ShipmentCreation", "Sheet1", i, 16, rate);
 				if (!rate.equals(ExpectedRate)) {
 					setData("ShipmentCreation", "Sheet1", i, 17, "FAIL");
@@ -456,10 +510,15 @@ public class ShipmentCreation extends BaseInit {
 
 				String rate = driver.findElement(By.id("btnFRG")).getText();
 				System.out.println(rate);
-				msg.append("FRG Service - Actual Rate :" + rate + "\n");
+				msg.append("ServiceID==" + serviceid + "\n");
+
+				// --Get Rate Details
+				GetRateDetails(i, serviceid);
+
+				msg.append("Actual Rate :" + rate + "\n");
 
 				String ExpectedRate = getData("ShipmentCreation", "Sheet1", i, 12);
-				msg.append("FRG Service - Expected Rate :" + ExpectedRate + "\n");
+				msg.append("Expected Rate :" + ExpectedRate + "\n");
 				setData("ShipmentCreation", "Sheet1", i, 16, rate);
 				if (!rate.equals(ExpectedRate)) {
 					setData("ShipmentCreation", "Sheet1", i, 17, "FAIL");
@@ -644,6 +703,58 @@ public class ShipmentCreation extends BaseInit {
 
 		} else {
 			System.out.println(Result + "=FAIL");
+		}
+
+	}
+
+	public static void GetRateDetails(int Row, String SName)
+			throws EncryptedDocumentException, InvalidFormatException, IOException, InterruptedException {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		Actions act = new Actions(driver);
+
+		// --Mouse Hover on Rate Details
+		String SRateID = "btn" + SName;
+		WebElement SRate = driver.findElement(By.id(SRateID));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(SRateID)));
+		act.moveToElement(SRate).build().perform();
+		Thread.sleep(2000);
+		getScreenshot(driver, "RateDetails" + SName);
+
+		// --Service Rate Table Xpath
+		String STRXpath = "//*[@id=\"divTable" + SName + "\"]/table/tbody/tr";
+		System.out.println("Service TRow xpath==" + STRXpath);
+
+		// Get the Rate Details
+		List<WebElement> Rates = driver.findElements(By.xpath(STRXpath));
+		int TotalRates = Rates.size();
+		System.out.println("Total Rates==" + TotalRates);
+
+		for (int RN = 0; RN < TotalRates; RN++) {
+			// --Create List of Rate Values
+			// --Get Rate Name
+			WebElement RNameE = Rates.get(RN).findElement(By.xpath("td[1]"));
+			String RName = RNameE.getText();
+			WebElement RValueE = Rates.get(RN).findElement(By.xpath("td[2]"));
+			String RValue = RValueE.getText();
+			System.out.println(RName + "=" + RValue);
+			msg.append(RName + "=" + RValue + "\n");
+
+			if (RName.contains("Base Rate")) {
+				setData("ShipmentCreation", "Sheet1", Row, 19, RValue);
+			} else if (RName.contains("Fuel Surcharge 5.75%")) {
+				setData("ShipmentCreation", "Sheet1", Row, 20, RValue);
+			} else if (RName.contains("Excess Mileage")) {
+				setData("ShipmentCreation", "Sheet1", Row, 21, RValue);
+			} else if (RName.contains("Your rate")) {
+				setData("ShipmentCreation", "Sheet1", Row, 22, RValue);
+			} else if (RName.contains("AFTER HOURS (DELIVERY)")) {
+				setData("ShipmentCreation", "Sheet1", Row, 23, RValue);
+			} else if (RName.contains("Delivery Mileage")) {
+				setData("ShipmentCreation", "Sheet1", Row, 24, RValue);
+			} else {
+				System.out.println("Unknown Rate found==" + RName);
+			}
+
 		}
 
 	}

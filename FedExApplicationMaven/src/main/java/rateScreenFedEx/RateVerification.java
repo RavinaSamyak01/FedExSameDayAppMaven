@@ -379,8 +379,12 @@ public class RateVerification extends BaseInit {
 					setData("RateVerification", "Sheet1", Col, 9, RValue);
 				} else if (RName.contains("Estimated Total")) {
 					setData("RateVerification", "Sheet1", Col, 10, RValue);
+				} else if (RName.contains("AFTER HOURS (DELIVERY)")) {
+					setData("RateVerification", "Sheet1", Col, 11, RValue);
+				} else if (RName.contains("Delivery Mileage")) {
+					setData("RateVerification", "Sheet1", Col, 12, RValue);
 				} else {
-					System.out.println("Unknown Rate found");
+					System.out.println("Unknown Rate found==" + RName);
 				}
 
 				break;
