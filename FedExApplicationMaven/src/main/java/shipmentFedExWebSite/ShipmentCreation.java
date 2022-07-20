@@ -751,6 +751,8 @@ public class ShipmentCreation extends BaseInit {
 				setData("ShipmentCreation", "Sheet1", Row, 23, RValue);
 			} else if (RName.contains("Delivery Mileage")) {
 				setData("ShipmentCreation", "Sheet1", Row, 24, RValue);
+			} else if (RName.contains("Road Toll (Pickup)")) {
+				setData("ShipmentCreation", "Sheet1", Row, 25, RValue);
 			} else {
 				System.out.println("Unknown Rate found==" + RName);
 			}
