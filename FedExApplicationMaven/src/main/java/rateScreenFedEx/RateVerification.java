@@ -37,7 +37,7 @@ public class RateVerification extends BaseInit {
 		// --get the data
 		System.out.println("Rate Verification start");
 
-		try {
+		//try {
 			// 31
 			for (int i = 1; i < 31; i++) {
 				driver.getTitle();
@@ -309,13 +309,14 @@ public class RateVerification extends BaseInit {
 
 			msg.append("Rate/Quote Verification Process Completed !!" + "\n");
 
-		} catch (
-
-		Exception e) {
-			System.out.println("Something went Wrong");
-			msg.append("Rate/Quote Verification Process Completed !!==FAIL" + "\n");
-
-		}
+			/*
+			 * } catch (
+			 * 
+			 * Exception e) { System.out.println("Something went Wrong");
+			 * msg.append("Rate/Quote Verification Process Completed !!==FAIL" + "\n");
+			 * 
+			 * }
+			 */
 
 		// Send Email
 

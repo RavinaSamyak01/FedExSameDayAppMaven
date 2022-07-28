@@ -34,7 +34,7 @@ public class ShipmentCreation extends BaseInit {
 		long start, end;
 		String Result = null;
 
-		try {
+		//try {
 			// 26
 
 			for (int i = 1; i < 26; i++) {
@@ -710,12 +710,12 @@ public class ShipmentCreation extends BaseInit {
 			}
 			msg.append("Shipment Creation Process Completed.... PASS" + "\n");
 
-		} catch (Exception error) {
-			getScreenshot(driver, "ShipmentCreationIssue");
-			msg.append("Shipment Creation Process Completed.... FAIL" + "\n");
-			Result = "FAIL";
+		/*} catch (Exception error) {
+		*	getScreenshot(driver, "ShipmentCreationIssue");
+			*msg.append("Shipment Creation Process Completed.... FAIL" + "\n");
+			*Result = "FAIL";
 
-		}
+		}*/
 
 		// If alert pop-up exist, than accept.
 		String Env = storage.getProperty("Env");
