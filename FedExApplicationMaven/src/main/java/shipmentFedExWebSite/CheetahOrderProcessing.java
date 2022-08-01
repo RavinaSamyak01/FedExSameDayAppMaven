@@ -855,8 +855,9 @@ public class CheetahOrderProcessing extends BaseInit {
 
 				}
 
-				System.out.println("Cheetah Process END----");
 			}
+			
+			System.out.println("Cheetah Process END----");
 
 			msg.append("Regards, - " + "\n");
 			msg.append("Selenium Automation" + "\n\n\n");
